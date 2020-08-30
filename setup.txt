@@ -1,0 +1,50 @@
+#install Prometheus
+
+wget https://github.com/prometheus/prometheus/releases/download/v2.21.0-rc.0/prometheus-2.21.0-rc.0.linux-amd64.tar.gz
+
+tar xvfz prometheus-2.21.0-rc.0.linux-amd64.tar.gz
+
+cd prometheus-2.21.0-rc.0.linux-amd64
+
+./prometheus --config.file=prometheus.yml
+
+
+#################### Installing Kubernetes ###################
+
+#Install kubectl on Linux
+#Install kubectl binary with curl on Linux
+#Download the latest release with the command:
+
+curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+
+
+#Make the kubectl binary executable.
+
+chmod +x ./kubectl
+
+#Move the binary in to your PATH.
+
+sudo mv ./kubectl /usr/local/bin/kubectl
+
+#Test to ensure the version you installed is up-to-date:
+
+kubectl version --client
+
+#nstall using native package management
+
+#Ubuntu, Debian or HypriotOSCentOS, RHEL or Fedora
+
+cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+yum install -y kubectl
+
+############## Install Minikube ##########
+#Refere below
+https://kubernetes.io/docs/tasks/tools/install-minikube/
